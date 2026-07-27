@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Browser</string>
+    <string name="initialization_text">AI Browser - Initialized</string>
+</resources>
