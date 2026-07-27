@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AI Browser</string>
+    <string name="app_name">AI Privacy Browser</string>
     <string name="initialization_text">AI Browser - Initialized</string>
+
+    <!-- Navigation & Titles -->
+    <string name="title_home">Home</string>
+    <string name="title_browser">Browser</string>
+    <string name="title_tabs">Tabs</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_bookmarks">Bookmarks</string>
+    <string name="title_history">History</string>
+
+    <!-- General UI Buttons/Labels -->
+    <string name="btn_go">Go</string>
+    <string name="btn_add_tab">Add Tab</string>
+    <string name="btn_clear_data">Clear Browsing Data</string>
+    <string name="btn_add_bookmark">Add Bookmark</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_clear_all">Clear All</string>
+
+    <!-- Speed Dial -->
+    <string name="speed_dial_google">Google</string>
+    <string name="speed_dial_wikipedia">Wikipedia</string>
+    <string name="speed_dial_github">GitHub</string>
+    <string name="speed_dial_reddit">Reddit</string>
+
+    <!-- Search / URL Bar Hint -->
+    <string name="search_or_url_hint">Search or enter URL</string>
+
+    <!-- Settings Screen -->
+    <string name="setting_homepage_title">Homepage</string>
+    <string name="setting_homepage_summary">Choose default browser homepage</string>
+    <string name="setting_search_engine_title">Default Search Engine</string>
+    <string name="setting_search_engine_summary">Select search engine for query input</string>
+    <string name="setting_clear_browsing_data_title">Clear Browsing Data</string>
+    <string name="setting_clear_browsing_data_summary">Clear cache, cookies, history, and tabs</string>
+
+    <!-- Empty Lists Indicators -->
+    <string name="empty_bookmarks">No bookmarks saved yet.</string>
+    <string name="empty_history">Browsing history is empty.</string>
+    <string name="empty_tabs">No tabs open.</string>
+
+    <!-- Confirm Dialogs -->
+    <string name="dialog_clear_confirm_title">Clear Browsing Data?</string>
+    <string name="dialog_clear_confirm_msg">This will permanently delete all browsing history, cache, cookies, and active tabs.</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear">Clear</string>
 </resources>

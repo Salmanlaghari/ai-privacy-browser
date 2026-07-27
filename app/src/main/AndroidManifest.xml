@@ -37,8 +37,9 @@
             android:resource="@xml/ga_ad_services_config"
             tools:replace="android:resource" />
 
+        <!-- HomeActivity: New Launcher Activity -->
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.HomeActivity"
             android:exported="true"
             android:theme="@style/Theme.AIBrowser">
             <intent-filter>
@@ -46,6 +47,42 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- BrowserActivity: Main webview window -->
+        <activity
+            android:name=".ui.BrowserActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AIBrowser" />
+
+        <!-- TabsActivity: Grid switcher for active tabs -->
+        <activity
+            android:name=".ui.TabsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AIBrowser" />
+
+        <!-- SettingsActivity: Browser configuration screen -->
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AIBrowser" />
+
+        <!-- BookmarksActivity: Bookmarked sites list -->
+        <activity
+            android:name=".ui.BookmarksActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AIBrowser" />
+
+        <!-- HistoryActivity: Browsing history records list -->
+        <activity
+            android:name=".ui.HistoryActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AIBrowser" />
+
+        <!-- Legacy MainActivity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AIBrowser" />
 
     </application>
 
