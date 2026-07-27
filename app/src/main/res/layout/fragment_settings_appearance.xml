@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Theme Mode"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <RadioGroup
+        android:id="@+id/themeModeRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp">
+
+        <RadioButton
+            android:id="@+id/radioThemeLight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Light" />
+
+        <RadioButton
+            android:id="@+id/radioThemeDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dark" />
+
+        <RadioButton
+            android:id="@+id/radioThemeSystem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="System Default" />
+
+        <RadioButton
+            android:id="@+id/radioThemeScheduled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Scheduled (Sunset to Sunrise)" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accent Color Style (Select One)"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Accent Color radio grid -->
+    <RadioGroup
+        android:id="@+id/accentRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp">
+
+        <RadioButton
+            android:id="@+id/accentBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Default Blue" />
+
+        <RadioButton
+            android:id="@+id/accentGreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forest Green" />
+
+        <RadioButton
+            android:id="@+id/accentOrange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sunset Orange" />
+
+        <RadioButton
+            android:id="@+id/accentPurple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Midnight Purple" />
+
+        <RadioButton
+            android:id="@+id/accentTeal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ocean Teal" />
+
+        <RadioButton
+            android:id="@+id/accentPink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rose Pink" />
+
+        <RadioButton
+            android:id="@+id/accentMonochrome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monochrome Gray" />
+
+        <RadioButton
+            android:id="@+id/accentAmoled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pure AMOLED Black" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Text Size scale"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/textSizeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scale: 100%"
+        android:textSize="12sp"
+        android:alpha="0.8"
+        android:layout_marginBottom="8dp" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/textSizeSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:valueFrom="50.0"
+        android:valueTo="200.0"
+        android:value="100.0" />
+
+</LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🤖"
+        android:textSize="96sp"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deep AI Integrations"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="?attr/colorPrimary"
+        android:layout_marginBottom="12dp"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ask anything instantly, summarize complex webpages with one tap, translate to 50+ languages, and compose smart replies easily."
+        android:textSize="16sp"
+        android:textColor="?attr/colorOnBackground"
+        android:gravity="center"
+        android:alpha="0.8" />
+</LinearLayout>

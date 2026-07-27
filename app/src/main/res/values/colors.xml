@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Base Material 3 Colors -->
     <color name="primary">#1976D2</color>
     <color name="primary_variant">#0D47A1</color>
     <color name="on_primary">#FFFFFF</color>
@@ -18,4 +19,33 @@
     <color name="on_background_night">#FFFFFF</color>
     <color name="surface_night">#121212</color>
     <color name="on_surface_night">#FFFFFF</color>
+
+    <!-- Premium Theme Color Palettes -->
+    <!-- Forest Green -->
+    <color name="accent_green">#388E3C</color>
+    <color name="accent_green_dark">#1B5E20</color>
+
+    <!-- Sunset Orange -->
+    <color name="accent_orange">#F57C00</color>
+    <color name="accent_orange_dark">#E65100</color>
+
+    <!-- Midnight Purple -->
+    <color name="accent_purple">#7B1FA2</color>
+    <color name="accent_purple_dark">#4A148C</color>
+
+    <!-- Ocean Teal -->
+    <color name="accent_teal">#00796B</color>
+    <color name="accent_teal_dark">#004D40</color>
+
+    <!-- Rose Pink -->
+    <color name="accent_pink">#C2185B</color>
+    <color name="accent_pink_dark">#880E4F</color>
+
+    <!-- Monochrome -->
+    <color name="accent_monochrome">#616161</color>
+    <color name="accent_monochrome_dark">#212121</color>
+
+    <!-- AMOLED Black -->
+    <color name="accent_amoled">#000000</color>
+    <color name="accent_amoled_dark">#000000</color>
 </resources>

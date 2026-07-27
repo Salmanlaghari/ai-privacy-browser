@@ -1,20 +1,24 @@
-# Default ignores for Android Studio / Gradle / Kotlin
-.gradle
-/build
-/app/build
-captures
-.externalNativeBuild
-.cxx
+# Standard Android Studio and Gradle Ignores
+.gradle/
+build/
+app/build/
+**/build/
+**/.gradle/
+
+# Local configuration files
 local.properties
-.idea/caches
-.idea/libraries
-.idea/modules.xml
-.idea/workspace.xml
-.idea/navEditor.xml
-.idea/assetWizard.settings.xml
-.DS_Store
+
+# Log files
+*.log
+
+# Android Studio project files
+.idea/
 *.iml
-*.apk
 *.ap_
+*.apk
 *.dex
 *.class
+captures/
+.externalNativeBuild/
+.cxx/
+.DS_Store

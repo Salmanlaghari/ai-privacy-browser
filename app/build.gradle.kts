@@ -110,6 +110,9 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
     implementation("com.jakewharton.timber:timber:5.0.1")
 
+    // WorkManager background job
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

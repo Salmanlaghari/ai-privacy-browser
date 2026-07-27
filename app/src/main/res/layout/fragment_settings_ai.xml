@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Default AI Assistant Feature"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <RadioGroup
+        android:id="@+id/aiFeatureRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp">
+
+        <RadioButton
+            android:id="@+id/radioAiSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AI Search Assistant" />
+
+        <RadioButton
+            android:id="@+id/radioAiSummarize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AI Page Summary" />
+
+        <RadioButton
+            android:id="@+id/radioAiTranslate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AI Webpage Translation" />
+    </RadioGroup>
+
+    <!-- Auto summarize -->
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchAutoSummarize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Auto-Summarize on Share Intent"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Daily free limit -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Daily Limit Tier"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Current Limit: 20 free calls / day (Upgrade to Premium for Unlimited AI)"
+        android:textSize="14sp"
+        android:alpha="0.8" />
+
+</LinearLayout>

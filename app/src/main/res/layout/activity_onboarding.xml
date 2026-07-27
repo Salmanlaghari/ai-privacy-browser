@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground">
+
+    <!-- ViewPager2 for Slides -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/navigationContainer" />
+
+    <!-- Navigation Container with Buttons and Dots -->
+    <RelativeLayout
+        android:id="@+id/navigationContainer"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_alignParentBottom="true"
+        android:paddingHorizontal="16dp"
+        android:background="?attr/colorSurface">
+
+        <Button
+            android:id="@+id/btnSkip"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Skip"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <!-- Simple Text Indicator instead of complex dots for reliability -->
+        <TextView
+            android:id="@+id/dotsIndicatorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 / 4"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:textColor="?attr/colorPrimary" />
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+</RelativeLayout>

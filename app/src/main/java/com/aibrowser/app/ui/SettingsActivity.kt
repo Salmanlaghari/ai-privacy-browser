@@ -1,115 +1,89 @@
 package com.aibrowser.app.ui
 
-import android.content.Context
 import android.os.Bundle
-import android.webkit.CookieManager
-import android.webkit.WebView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import com.aibrowser.app.data.AppDatabase
-import com.aibrowser.app.data.HistoryRepository
-import com.aibrowser.app.data.TabManager
+import androidx.fragment.app.Fragment
+import com.aibrowser.app.R
 import com.aibrowser.app.databinding.ActivitySettingsBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.aibrowser.app.ui.settings.GeneralSettingsFragment
+import com.aibrowser.app.ui.settings.AppearanceSettingsFragment
+import com.aibrowser.app.ui.settings.PrivacySettingsFragment
+import com.aibrowser.app.ui.settings.AiSettingsFragment
+import com.aibrowser.app.ui.settings.SyncSettingsFragment
 
 /**
  * Settings configuration screen.
- * Allows users to choose homepage preference, pick default search engine, and purge data.
+ * Swaps sub-fragments dynamically representing sections: General, Appearance, Privacy, AI, and Sync.
  */
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
+    private var currentFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        loadSettings()
         setupListeners()
-    }
-
-    private fun loadSettings() {
-        val prefs = getSharedPreferences("browser_settings", MODE_PRIVATE)
-        val homepage = prefs.getString("homepage_url", "https://www.google.com")
-        val useGoogle = prefs.getBoolean("use_google", false) // default is false (privacy-first DuckDuckGo)
-
-        binding.homepageEditText.setText(homepage)
-        if (useGoogle) {
-            binding.radioGoogle.isChecked = true
-        } else {
-            binding.radioDuckDuckGo.isChecked = true
-        }
     }
 
     private fun setupListeners() {
         binding.btnBack.setOnClickListener {
-            saveSettingsAndFinish()
+            handleBackAction()
         }
 
-        binding.btnClearBrowsingData.setOnClickListener {
-            showClearBrowsingDataDialog()
+        binding.cardGeneral.setOnClickListener {
+            loadSectionFragment(GeneralSettingsFragment(), "General Settings")
+        }
+
+        binding.cardAppearance.setOnClickListener {
+            loadSectionFragment(AppearanceSettingsFragment(), "Appearance Customization")
+        }
+
+        binding.cardPrivacy.setOnClickListener {
+            loadSectionFragment(PrivacySettingsFragment(), "Privacy & Security")
+        }
+
+        binding.cardAi.setOnClickListener {
+            loadSectionFragment(AiSettingsFragment(), "AI Assistant Options")
+        }
+
+        binding.cardSync.setOnClickListener {
+            loadSectionFragment(SyncSettingsFragment(), "Cloud Synchronization")
         }
     }
 
-    private fun saveSettingsAndFinish() {
-        val prefs = getSharedPreferences("browser_settings", MODE_PRIVATE)
-        val newHomepage = binding.homepageEditText.text.toString().trim()
-        val useGoogle = binding.radioGoogle.isChecked
+    private fun loadSectionFragment(fragment: Fragment, title: String) {
+        currentFragment = fragment
+        binding.settingsCategoryScrollView.visibility = View.GONE
+        binding.titleTextView.text = title
 
-        prefs.edit().apply {
-            putString("homepage_url", if (newHomepage.isNotEmpty()) newHomepage else "https://www.google.com")
-            putBoolean("use_google", useGoogle)
-            apply()
-        }
-
-        Toast.makeText(this, "Settings Saved", Toast.LENGTH_SHORT).show()
-        finish()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.settingsFragmentContainer, fragment)
+            .commit()
     }
 
-    private fun showClearBrowsingDataDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("Clear Browsing Data?")
-            .setMessage("This will permanently clear history, cookies, cache, and all open tabs.")
-            .setPositiveButton("Clear") { _, _ ->
-                clearBrowsingData()
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
-
-    private fun clearBrowsingData() {
-        lifecycleScope.launch {
-            // Clear History Database
-            val database = AppDatabase.getDatabase(this@SettingsActivity)
-            val historyRepo = HistoryRepository(database.historyDao())
-            withContext(Dispatchers.IO) {
-                historyRepo.clearAll()
-            }
-
-            // Clear Cookies
-            CookieManager.getInstance().removeAllCookies(null)
-            CookieManager.getInstance().flush()
-
-            // Clear Cache
-            val webView = WebView(this@SettingsActivity)
-            webView.clearCache(true)
-
-            // Clear TabManager active tabs
-            TabManager.clearAllTabs()
-            TabManager.initialize(this@SettingsActivity)
-            TabManager.persist(this@SettingsActivity)
-
-            Toast.makeText(this@SettingsActivity, "Browsing Data Cleared Successfully", Toast.LENGTH_SHORT).show()
+    private fun handleBackAction() {
+        if (currentFragment != null) {
+            // Remove fragment and show main categories
+            supportFragmentManager.beginTransaction()
+                .remove(currentFragment!!)
+                .commit()
+            currentFragment = null
+            binding.settingsCategoryScrollView.visibility = View.VISIBLE
+            binding.titleTextView.text = getString(R.string.title_settings)
+        } else {
+            finish()
         }
     }
 
     override fun onBackPressed() {
-        saveSettingsAndFinish()
-        super.onBackPressed()
+        if (currentFragment != null) {
+            handleBackAction()
+        } else {
+            super.onBackPressed()
+        }
     }
 }

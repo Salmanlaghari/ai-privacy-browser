@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -26,6 +25,7 @@
             android:background="?attr/selectableItemBackgroundBorderless" />
 
         <TextView
+            android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_settings"
@@ -35,117 +35,165 @@
             android:textColor="?attr/colorOnSurface" />
     </LinearLayout>
 
-    <ScrollView
+    <FrameLayout
+        android:id="@+id/settingsFragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <!-- Initial list of settings categories -->
+        <ScrollView
+            android:id="@+id/settingsCategoryScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:padding="16dp">
 
-            <!-- Default Homepage Option -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setting_homepage_title"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground"
-                android:layout_marginTop="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setting_homepage_summary"
-                android:textSize="12sp"
-                android:textColor="?attr/colorOnBackground"
-                android:alpha="0.7"
-                android:layout_marginBottom="8dp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp">
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/homepageEditText"
+                <!-- General -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardGeneral"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textUri"
-                    android:text="about:blank" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginBottom="12dp"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="General"
+                            android:textStyle="bold"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Search engine, homepage preferences, download locations"
+                            android:textSize="12sp"
+                            android:alpha="0.7" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-            <!-- Default Search Engine Option -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setting_search_engine_title"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setting_search_engine_summary"
-                android:textSize="12sp"
-                android:textColor="?attr/colorOnBackground"
-                android:alpha="0.7"
-                android:layout_marginBottom="12dp" />
-
-            <RadioGroup
-                android:id="@+id/searchEngineRadioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="32dp">
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/radioGoogle"
+                <!-- Appearance -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardAppearance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Google"
-                    android:checked="true" />
+                    android:layout_marginBottom="12dp"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Appearance"
+                            android:textStyle="bold"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Themes, accent colors, purely black AMOLED, text resizing"
+                            android:textSize="12sp"
+                            android:alpha="0.7" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/radioDuckDuckGo"
+                <!-- Privacy & Security -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPrivacy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="DuckDuckGo (Privacy-Focused)" />
-            </RadioGroup>
+                    android:layout_marginBottom="12dp"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Privacy &amp; Security"
+                            android:textStyle="bold"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Built-in ad-blocking, HTTPS-Only, Do-Not-Track headers"
+                            android:textSize="12sp"
+                            android:alpha="0.7" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-            <!-- Clear Browsing Data Option -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setting_clear_browsing_data_title"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground" />
+                <!-- AI Configurations -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardAi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="AI Assistants"
+                            android:textStyle="bold"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Default actions, auto-translate, sharing prompt configs"
+                            android:textSize="12sp"
+                            android:alpha="0.7" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setting_clear_browsing_data_summary"
-                android:textSize="12sp"
-                android:textColor="?attr/colorOnBackground"
-                android:alpha="0.7"
-                android:layout_marginBottom="12dp" />
+                <!-- Sync -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardSync"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cloud Sync (Firebase)"
+                            android:textStyle="bold"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Google Sync bookmarks, history, settings, and open tabs"
+                            android:textSize="12sp"
+                            android:alpha="0.7" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-            <Button
-                android:id="@+id/btnClearBrowsingData"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_clear_data"
-                android:textColor="?attr/colorError"
-                android:icon="@drawable/ic_close"
-                android:iconTint="?attr/colorError" />
-
-        </LinearLayout>
-    </ScrollView>
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
 
 </LinearLayout>

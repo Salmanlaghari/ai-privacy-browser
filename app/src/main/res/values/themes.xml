@@ -2,11 +2,60 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.AIBrowser" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/on_primary</item>
         <item name="colorSecondary">@color/secondary</item>
         <item name="colorOnSecondary">@color/on_secondary</item>
         <item name="android:statusBarColor">@color/primary</item>
+    </style>
+
+    <!-- Theme.AIBrowser.Blue (Default Blue) -->
+    <style name="Theme.AIBrowser.Blue" parent="Theme.AIBrowser">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorSecondary">@color/secondary</item>
+    </style>
+
+    <!-- Theme.AIBrowser.Green (Forest Green) -->
+    <style name="Theme.AIBrowser.Green" parent="Theme.AIBrowser">
+        <item name="colorPrimary">@color/accent_green</item>
+        <item name="colorSecondary">@color/accent_green_dark</item>
+    </style>
+
+    <!-- Theme.AIBrowser.Orange (Sunset Orange) -->
+    <style name="Theme.AIBrowser.Orange" parent="Theme.AIBrowser">
+        <item name="colorPrimary">@color/accent_orange</item>
+        <item name="colorSecondary">@color/accent_orange_dark</item>
+    </style>
+
+    <!-- Theme.AIBrowser.Purple (Midnight Purple) -->
+    <style name="Theme.AIBrowser.Purple" parent="Theme.AIBrowser">
+        <item name="colorPrimary">@color/accent_purple</item>
+        <item name="colorSecondary">@color/accent_purple_dark</item>
+    </style>
+
+    <!-- Theme.AIBrowser.Teal (Ocean Teal) -->
+    <style name="Theme.AIBrowser.Teal" parent="Theme.AIBrowser">
+        <item name="colorPrimary">@color/accent_teal</item>
+        <item name="colorSecondary">@color/accent_teal_dark</item>
+    </style>
+
+    <!-- Theme.AIBrowser.Pink (Rose Pink) -->
+    <style name="Theme.AIBrowser.Pink" parent="Theme.AIBrowser">
+        <item name="colorPrimary">@color/accent_pink</item>
+        <item name="colorSecondary">@color/accent_pink_dark</item>
+    </style>
+
+    <!-- Theme.AIBrowser.Monochrome (Monochrome) -->
+    <style name="Theme.AIBrowser.Monochrome" parent="Theme.AIBrowser">
+        <item name="colorPrimary">@color/accent_monochrome</item>
+        <item name="colorSecondary">@color/accent_monochrome_dark</item>
+    </style>
+
+    <!-- Theme.AIBrowser.Amoled (AMOLED Pure Black) -->
+    <style name="Theme.AIBrowser.Amoled" parent="Theme.AIBrowser">
+        <item name="colorPrimary">@color/accent_monochrome</item>
+        <item name="colorSecondary">@color/accent_monochrome_dark</item>
+        <item name="android:windowBackground">@color/accent_amoled</item>
+        <item name="android:colorBackground">@color/accent_amoled</item>
     </style>
 </resources>

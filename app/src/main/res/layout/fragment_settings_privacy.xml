@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Ad blocker -->
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchAdBlocker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enable Ad Blocker"
+        android:layout_marginBottom="16dp" />
+
+    <!-- HTTPS-Only -->
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchHttpsOnly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="HTTPS-Only Mode"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Block Trackers -->
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchBlockTrackers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Block Activity Trackers"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Third party cookies -->
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchBlockThirdPartyCookies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Block Third-Party Cookies"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Do-Not-Track -->
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchDoNotTrack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send 'Do Not Track' Request"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Clear data button -->
+    <Button
+        android:id="@+id/btnPurgeData"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clear Browsing Data"
+        android:textColor="?attr/colorError" />
+
+</LinearLayout>

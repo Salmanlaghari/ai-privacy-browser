@@ -5,193 +5,264 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center_horizontal"
     android:background="?android:attr/colorBackground">
 
-    <TextView
-        android:id="@+id/appTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/app_name"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="?attr/colorPrimary" />
-
-    <!-- Search / URL Bar -->
-    <LinearLayout
+    <!-- News Ticker Row -->
+    <com.aibrowser.app.ui.home.NewsTickerView
+        android:id="@+id/newsTicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@drawable/bg_search_bar"
-        android:padding="4dp"
-        android:elevation="2dp"
-        android:layout_marginBottom="40dp">
-
-        <EditText
-            android:id="@+id/urlEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/search_or_url_hint"
-            android:inputType="textUri|textAutoCorrect"
-            android:maxLines="1"
-            android:imeOptions="actionGo"
-            android:background="@android:color/transparent"
-            android:padding="12dp"
-            android:textSize="16sp" />
-
-        <ImageButton
-            android:id="@+id/btnMic"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_mic"
-            android:contentDescription="Voice Search"
-            android:background="?attr/selectableItemBackgroundBorderless" />
-
-        <Button
-            android:id="@+id/btnGo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_go"
-            android:layout_marginEnd="4dp" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quick Access"
-        android:textSize="18sp"
+        android:background="?attr/colorPrimaryContainer"
+        android:textColor="?attr/colorOnPrimaryContainer"
+        android:padding="8dp"
+        android:textSize="12sp"
         android:textStyle="bold"
-        android:layout_gravity="start"
-        android:layout_marginBottom="16dp"
-        android:textColor="?attr/colorOnBackground" />
+        android:gravity="center"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
 
-    <!-- Speed Dial Grid -->
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:rowCount="2"
-        android:alignmentMode="alignMargins"
-        android:columnOrderPreserved="false">
-
-        <!-- Google -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardGoogle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="12dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="?attr/colorOutlineVariant">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/speed_dial_google"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Wikipedia -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardWikipedia"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="12dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="?attr/colorOutlineVariant">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/speed_dial_wikipedia"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- GitHub -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardGithub"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="12dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="?attr/colorOutlineVariant">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/speed_dial_github"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Reddit -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardReddit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="12dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="?attr/colorOutlineVariant">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/speed_dial_reddit"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-    </GridLayout>
-
-    <View
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:padding="16dp">
 
-    <!-- Bottom utility shortcut row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Greeting + Time -->
+            <TextView
+                android:id="@+id/greetingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Good morning, User"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Large Search Bar Container -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_search_bar"
+                android:padding="4dp"
+                android:layout_marginBottom="24dp">
+
+                <EditText
+                    android:id="@+id/urlEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/search_or_url_hint"
+                    android:inputType="textUri|textAutoCorrect"
+                    android:maxLines="1"
+                    android:imeOptions="actionGo"
+                    android:background="@android:color/transparent"
+                    android:padding="12dp"
+                    android:textSize="14sp" />
+
+                <ImageButton
+                    android:id="@+id/btnHomeAiSearch"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_mic"
+                    android:contentDescription="Ask AI Search"
+                    android:background="?attr/selectableItemBackgroundBorderless" />
+
+                <Button
+                    android:id="@+id/btnGo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_go"
+                    android:layout_marginEnd="4dp" />
+            </LinearLayout>
+
+            <!-- Quick AI Assistant Shortcuts -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AI Assistants"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="24dp">
+
+                <Button
+                    android:id="@+id/btnHomeAskAi"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="🤖 Ask AI"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btnHomeSummarize"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="✨ Summarize"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btnHomeTranslate"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="🌍 Translate" />
+            </LinearLayout>
+
+            <!-- Privacy Blocker Badge -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="12dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="?attr/colorOutlineVariant"
+                app:cardBackgroundColor="?attr/colorTertiaryContainer">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🛡️"
+                        android:textSize="24sp"
+                        android:layout_marginEnd="12dp" />
+                    <TextView
+                        android:id="@+id/privacyBadgeText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Privacy: 48 trackers blocked today"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorOnTertiaryContainer"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Category Filter horizontal scroll chips -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Explore Curated Categories"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginBottom="8dp" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:layout_marginBottom="12dp">
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/categoryChipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipNews"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="News"
+                        android:checked="true" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipSports"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sports" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipTech"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tech" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipReligious"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Religious" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipShopping"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Shopping" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipEntertainment"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Entertainment" />
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+            <!-- Curated category items list -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/categoryRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Personalized top 8 visited items -->
+            <TextView
+                android:id="@+id/personalizedTitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Frequently Visited"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginBottom="8dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/personalizedRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="16dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Utility Shortcuts row -->
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
         android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
+        android:gravity="center"
+        android:background="?attr/colorSurface"
+        android:elevation="8dp">
 
         <Button
             android:id="@+id/btnHomeBookmarks"

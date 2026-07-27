@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Homepage URL"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/homepageEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="https://www.google.com"
+        android:inputType="textUri"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Default Search Engine"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <RadioGroup
+        android:id="@+id/searchEngineRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp">
+
+        <RadioButton
+            android:id="@+id/radioGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Google" />
+
+        <RadioButton
+            android:id="@+id/radioDuckDuckGo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DuckDuckGo (Privacy)" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Default Download Location"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Downloads/ (External Public Storage)"
+        android:textSize="14sp"
+        android:alpha="0.8" />
+
+</LinearLayout>
