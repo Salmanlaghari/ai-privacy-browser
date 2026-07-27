@@ -2,6 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/action_ai_search"
+        android:title="🤖 AI Search Assistant" />
+
+    <item
+        android:id="@+id/action_ai_summarize"
+        android:title="✨ AI Page Summary" />
+
+    <item
+        android:id="@+id/action_ai_translate"
+        android:title="🌍 AI Page Translate" />
+
+    <item
         android:id="@+id/action_add_bookmark"
         android:title="Add Bookmark" />
 

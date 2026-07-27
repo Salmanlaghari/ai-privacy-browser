@@ -6,16 +6,18 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.aibrowser.app.domain.Bookmark
 import com.aibrowser.app.domain.HistoryEntry
+import com.aibrowser.app.domain.AiCache
 
 /**
  * Main application Room database.
- * Holds tables for [Bookmark] and [HistoryEntry].
+ * Holds tables for [Bookmark], [HistoryEntry], and [AiCache].
  */
-@Database(entities = [Bookmark::class, HistoryEntry::class], version = 1, exportSchema = false)
+@Database(entities = [Bookmark::class, HistoryEntry::class, AiCache::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun bookmarkDao(): BookmarkDao
     abstract fun historyDao(): HistoryDao
+    abstract fun aiCacheDao(): AiCacheDao
 
     companion object {
         @Volatile
@@ -30,7 +32,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "browser.db"
-                ).build()
+                )
+                .fallbackToDestructiveMigration()
+                .build()
                 INSTANCE = instance
                 instance
             }

@@ -15,20 +15,31 @@ import android.view.inputmethod.EditorInfo
 import android.webkit.*
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.aibrowser.app.R
+import com.aibrowser.app.data.AiRepository
 import com.aibrowser.app.data.AppDatabase
 import com.aibrowser.app.data.BookmarkRepository
 import com.aibrowser.app.data.HistoryRepository
 import com.aibrowser.app.data.TabManager
 import com.aibrowser.app.databinding.FragmentBrowserBinding
+import com.aibrowser.app.ui.ai.AiSearchBottomSheet
+import com.aibrowser.app.ui.ai.AiSummaryBottomSheet
+import com.aibrowser.app.ui.ai.AiTranslateBottomSheet
+import com.aibrowser.app.util.TextExtractor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 /**
  * Core WebView browser component. Handles web loading, page navigation,
  * bookmarks, history integration, pull-to-refresh, downloads, and multi-tab rendering.
+ * Fully integrated with deep AI capabilities like AI Search, Summaries, Translations, and Compose.
  */
 class BrowserFragment : Fragment() {
 
@@ -36,6 +47,7 @@ class BrowserFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: BrowserViewModel
+    private lateinit var aiRepository: AiRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,11 +61,12 @@ class BrowserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize Manual DI & ViewModel
         val context = requireContext()
         val database = AppDatabase.getDatabase(context)
         val bookmarkRepo = BookmarkRepository(database.bookmarkDao())
         val historyRepo = HistoryRepository(database.historyDao())
+        aiRepository = AiRepository(context, database.aiCacheDao())
+
         val factory = BrowserViewModel.Factory(bookmarkRepo, historyRepo)
         viewModel = ViewModelProvider(this, factory)[BrowserViewModel::class.java]
 
@@ -66,7 +79,6 @@ class BrowserFragment : Fragment() {
         val activeTab = TabManager.getActiveTab()
         if (activeTab != null) {
             val urlToLoad = if (activeTab.url == "about:blank") {
-                // If it is a blank tab, check user homepage settings, or load a fallback
                 getHomepageUrl()
             } else {
                 activeTab.url
@@ -85,26 +97,21 @@ class BrowserFragment : Fragment() {
         val webView = binding.webView
         val settings = webView.settings
 
-        // Enable settings requested by the specifications
         settings.javaScriptEnabled = true
         settings.domStorageEnabled = true
         settings.builtInZoomControls = true
         settings.displayZoomControls = false
         settings.cacheMode = WebSettings.LOAD_DEFAULT
-
-        // Block mixed content (security requirement)
         settings.mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
 
-        // Smooth WebView rendering hardware acceleration
         webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-
-        // Cookies accept by default
         CookieManager.getInstance().setAcceptCookie(true)
 
-        // Configure WebView Clients
+        // Bind JavaScript Interface for smart compose field interception
+        webView.addJavascriptInterface(AndroidJsBridge(), "AndroidApp")
+
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                // Intercept navigation
                 return false
             }
 
@@ -113,7 +120,6 @@ class BrowserFragment : Fragment() {
                 url?.let {
                     binding.urlEditText.setText(it)
                     viewModel.checkIsBookmarked(it)
-                    // Update current active tab title/URL state
                     TabManager.getActiveTab()?.let { tab ->
                         TabManager.updateTab(tab.id, view?.title ?: "Loading...", it)
                     }
@@ -133,17 +139,14 @@ class BrowserFragment : Fragment() {
                 }
                 binding.progressBar.visibility = View.GONE
                 binding.swipeRefreshLayout.isRefreshing = false
+
+                // Inject JS listener for ContentEditable / Textareas to support Smart Compose
+                injectSmartComposeListener()
             }
 
             override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: android.net.http.SslError?) {
-                // Simple warning placeholder, cancel for safety or proceed for testing based on preference
                 Toast.makeText(context, "SSL Connection Warning", Toast.LENGTH_SHORT).show()
-                handler?.cancel() // Standard secure default
-            }
-
-            override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
-                // Ad blocker phase 4 placeholder
-                return super.shouldInterceptRequest(view, request)
+                handler?.cancel()
             }
         }
 
@@ -152,35 +155,13 @@ class BrowserFragment : Fragment() {
                 super.onProgressChanged(view, newProgress)
                 binding.progressBar.progress = newProgress
             }
-
-            override fun onShowFileChooser(
-                webView: WebView?,
-                filePathCallback: ValueCallback<Array<Uri>>?,
-                fileChooserParams: FileChooserParams?
-            ): Boolean {
-                // Placeholder/Return true to indicate we will handle it in a future update
-                Toast.makeText(context, "File upload is a placeholder (Phase 2)", Toast.LENGTH_SHORT).show()
-                return false
-            }
-
-            override fun onCreateWindow(
-                view: WebView?,
-                isDialog: Boolean,
-                isUserGesture: Boolean,
-                resultMsg: android.os.Message?
-            ): Boolean {
-                // Multi-window popup support
-                return super.onCreateWindow(view, isDialog, isUserGesture, resultMsg)
-            }
         }
 
-        // Setup Pull-to-refresh on WebView
         binding.swipeRefreshLayout.setOnRefreshListener {
             webView.reload()
         }
 
-        // Setup downloads using Android DownloadManager
-        webView.setDownloadListener { url, userAgent, contentDisposition, mimetype, contentLength ->
+        webView.setDownloadListener { url, userAgent, contentDisposition, mimetype, _ ->
             try {
                 val request = DownloadManager.Request(Uri.parse(url)).apply {
                     setMimeType(mimetype)
@@ -198,7 +179,6 @@ class BrowserFragment : Fragment() {
             }
         }
 
-        // Long press link context menus
         registerForContextMenu(webView)
     }
 
@@ -220,7 +200,12 @@ class BrowserFragment : Fragment() {
             } else false
         }
 
-        // Bookmark Toggle click action
+        // Long press URL Bar launches AI Search Overlay
+        binding.urlEditText.setOnLongClickListener {
+            openAiSearch()
+            true
+        }
+
         binding.btnBookmark.setOnClickListener {
             val url = binding.webView.url ?: ""
             val title = binding.webView.title ?: "No Title"
@@ -259,7 +244,6 @@ class BrowserFragment : Fragment() {
             if (binding.webView.canGoBack()) {
                 binding.webView.goBack()
             } else {
-                // If can't go back, close or return to home
                 activity?.finish()
             }
         }
@@ -303,6 +287,18 @@ class BrowserFragment : Fragment() {
         popup.menuInflater.inflate(R.menu.menu_browser, popup.menu)
         popup.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
+                R.id.action_ai_search -> {
+                    openAiSearch()
+                    true
+                }
+                R.id.action_ai_summarize -> {
+                    openAiSummary()
+                    true
+                }
+                R.id.action_ai_translate -> {
+                    openAiTranslate()
+                    true
+                }
                 R.id.action_add_bookmark -> {
                     val url = binding.webView.url ?: ""
                     val title = binding.webView.title ?: "No Title"
@@ -327,6 +323,41 @@ class BrowserFragment : Fragment() {
             }
         }
         popup.show()
+    }
+
+    private fun openAiSearch() {
+        val bottomSheet = AiSearchBottomSheet()
+        bottomSheet.show(parentFragmentManager, "AiSearch")
+    }
+
+    private fun openAiSummary() {
+        TextExtractor.extractText(binding.webView) { text ->
+            val bottomSheet = AiSummaryBottomSheet.newInstance(text)
+            bottomSheet.show(parentFragmentManager, "AiSummary")
+        }
+    }
+
+    private fun openAiTranslate() {
+        TextExtractor.extractText(binding.webView) { text ->
+            val bottomSheet = AiTranslateBottomSheet.newInstance(text)
+            bottomSheet.show(parentFragmentManager, "AiTranslate")
+        }
+    }
+
+    private fun injectSmartComposeListener() {
+        val script = """
+            (function() {
+                var inputs = document.querySelectorAll('textarea, [contenteditable="true"]');
+                for (var i = 0; i < inputs.length; i++) {
+                    inputs[i].addEventListener('focus', function(e) {
+                        var tag = e.target.tagName.toLowerCase();
+                        var context = e.target.innerText || e.target.value || '';
+                        AndroidApp.onTextFieldFocused(context);
+                    });
+                }
+            })()
+        """.trimIndent()
+        binding.webView.evaluateJavascript(script, null)
     }
 
     private fun setupObservers() {
@@ -363,7 +394,6 @@ class BrowserFragment : Fragment() {
 
         when (item.itemId) {
             1 -> {
-                // Open in new tab
                 TabManager.createTab("New Tab", linkUrl)
                 binding.webView.loadUrl(linkUrl)
                 binding.urlEditText.setText(linkUrl)
@@ -371,7 +401,6 @@ class BrowserFragment : Fragment() {
                 return true
             }
             2 -> {
-                // Copy link address
                 val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
                 val clip = android.content.ClipData.newPlainText("Copied Link", linkUrl)
                 clipboard.setPrimaryClip(clip)
@@ -379,7 +408,6 @@ class BrowserFragment : Fragment() {
                 return true
             }
             3 -> {
-                // Share link
                 val sendIntent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TEXT, linkUrl)
@@ -389,7 +417,6 @@ class BrowserFragment : Fragment() {
                 return true
             }
             4 -> {
-                // Download link content
                 val request = DownloadManager.Request(Uri.parse(linkUrl)).apply {
                     setDescription("Downloading from link...")
                     setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
@@ -404,9 +431,61 @@ class BrowserFragment : Fragment() {
         return super.onContextItemSelected(item)
     }
 
+    /**
+     * Show Smart Compose prompt dialog to compose and auto-insert content into the focused text area.
+     */
+    private fun showSmartComposePromptDialog(existingContent: String) {
+        val inputEditText = EditText(requireContext()).apply {
+            hint = "Reply saying yes / make this professional..."
+            setPadding(32, 32, 32, 32)
+        }
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("✍️ AI Smart Compose Helper")
+            .setView(inputEditText)
+            .setPositiveButton("Generate & Insert") { dialog, _ ->
+                val prompt = inputEditText.text.toString().trim()
+                if (prompt.isNotEmpty()) {
+                    generateSmartCompose(prompt, existingContent)
+                }
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun generateSmartCompose(prompt: String, existingContent: String) {
+        val compositePrompt = "$prompt. Context of input field: $existingContent"
+
+        lifecycleScope.launch {
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    aiRepository.getSmartCompose(compositePrompt)
+                }
+                // Insert generated text back into currently active focused text element in WebView
+                val escapedResult = result.replace("'", "\\'").replace("\n", "\\n")
+                val insertionScript = """
+                    (function() {
+                        var active = document.activeElement;
+                        if (active) {
+                            if (active.tagName.toLowerCase() === 'textarea' || active.tagName.toLowerCase() === 'input') {
+                                active.value = '$escapedResult';
+                            } else if (active.getAttribute('contenteditable') === 'true') {
+                                active.innerText = '$escapedResult';
+                            }
+                        }
+                    })()
+                """.trimIndent()
+                binding.webView.evaluateJavascript(insertionScript, null)
+                Toast.makeText(context, "AI Text inserted!", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Toast.makeText(context, e.message ?: "Failed to compose text.", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
-        // Reload settings if homepage or default tab changes
         val activeTab = TabManager.getActiveTab()
         if (activeTab != null && activeTab.url != binding.webView.url && activeTab.url != "about:blank") {
             binding.webView.loadUrl(activeTab.url)
@@ -417,5 +496,17 @@ class BrowserFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    /**
+     * JS Bridge class for communication from WebView javascript hooks back to Android Kotlin.
+     */
+    inner class AndroidJsBridge {
+        @JavascriptInterface
+        fun onTextFieldFocused(existingContent: String) {
+            activity?.runOnUiThread {
+                showSmartComposePromptDialog(existingContent)
+            }
+        }
     }
 }
