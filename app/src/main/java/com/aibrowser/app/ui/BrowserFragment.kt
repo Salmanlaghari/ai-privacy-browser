@@ -49,6 +49,7 @@ class BrowserFragment : Fragment() {
     private lateinit var viewModel: BrowserViewModel
     private lateinit var aiRepository: AiRepository
     private lateinit var downloadRepository: com.aibrowser.app.data.DownloadRepository
+    private lateinit var adBlockEngine: com.aibrowser.app.data.AdBlockEngine
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,6 +69,7 @@ class BrowserFragment : Fragment() {
         val historyRepo = HistoryRepository(database.historyDao())
         aiRepository = AiRepository(context, database.aiCacheDao())
         downloadRepository = com.aibrowser.app.data.DownloadRepository(database.downloadRecordDao())
+        adBlockEngine = com.aibrowser.app.data.AdBlockEngine.getInstance(context)
 
         val factory = BrowserViewModel.Factory(bookmarkRepo, historyRepo)
         viewModel = ViewModelProvider(this, factory)[BrowserViewModel::class.java]
@@ -149,6 +151,15 @@ class BrowserFragment : Fragment() {
             override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: android.net.http.SslError?) {
                 Toast.makeText(context, "SSL Connection Warning", Toast.LENGTH_SHORT).show()
                 handler?.cancel()
+            }
+
+            override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
+                val url = request?.url?.toString() ?: return super.shouldInterceptRequest(view, request)
+                if (adBlockEngine.isBlocked(url)) {
+                    // Intercept and return an empty response to block the ad / tracker
+                    return WebResourceResponse("text/plain", "utf-8", "".byteInputStream())
+                }
+                return super.shouldInterceptRequest(view, request)
             }
         }
 
