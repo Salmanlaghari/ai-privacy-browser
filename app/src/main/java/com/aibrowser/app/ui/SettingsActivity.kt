@@ -36,13 +36,13 @@ class SettingsActivity : AppCompatActivity() {
     private fun loadSettings() {
         val prefs = getSharedPreferences("browser_settings", MODE_PRIVATE)
         val homepage = prefs.getString("homepage_url", "https://www.google.com")
-        val useDuckDuckGo = prefs.getBoolean("use_duckduckgo", false)
+        val useGoogle = prefs.getBoolean("use_google", false) // default is false (privacy-first DuckDuckGo)
 
         binding.homepageEditText.setText(homepage)
-        if (useDuckDuckGo) {
-            binding.radioDuckDuckGo.isChecked = true
-        } else {
+        if (useGoogle) {
             binding.radioGoogle.isChecked = true
+        } else {
+            binding.radioDuckDuckGo.isChecked = true
         }
     }
 
@@ -59,11 +59,11 @@ class SettingsActivity : AppCompatActivity() {
     private fun saveSettingsAndFinish() {
         val prefs = getSharedPreferences("browser_settings", MODE_PRIVATE)
         val newHomepage = binding.homepageEditText.text.toString().trim()
-        val useDuckDuckGo = binding.radioDuckDuckGo.isChecked
+        val useGoogle = binding.radioGoogle.isChecked
 
         prefs.edit().apply {
             putString("homepage_url", if (newHomepage.isNotEmpty()) newHomepage else "https://www.google.com")
-            putBoolean("use_duckduckgo", useDuckDuckGo)
+            putBoolean("use_google", useGoogle)
             apply()
         }
 

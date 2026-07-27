@@ -84,13 +84,13 @@ class HomeActivity : AppCompatActivity() {
                 trimmed
             }
         } else {
-            // Get search engine preference
+            // Get search engine preference (default to DuckDuckGo privacy-first)
             val prefs = getSharedPreferences("browser_settings", MODE_PRIVATE)
-            val useDuckDuckGo = prefs.getBoolean("use_duckduckgo", false)
-            val searchBase = if (useDuckDuckGo) {
-                "https://duckduckgo.com/?q="
-            } else {
+            val useGoogle = prefs.getBoolean("use_google", false)
+            val searchBase = if (useGoogle) {
                 "https://www.google.com/search?q="
+            } else {
+                "https://duckduckgo.com/?q="
             }
             searchBase + java.net.URLEncoder.encode(trimmed, "UTF-8")
         }

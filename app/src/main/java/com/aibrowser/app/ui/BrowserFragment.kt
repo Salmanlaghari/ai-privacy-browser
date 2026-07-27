@@ -48,6 +48,7 @@ class BrowserFragment : Fragment() {
 
     private lateinit var viewModel: BrowserViewModel
     private lateinit var aiRepository: AiRepository
+    private lateinit var downloadRepository: com.aibrowser.app.data.DownloadRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +67,7 @@ class BrowserFragment : Fragment() {
         val bookmarkRepo = BookmarkRepository(database.bookmarkDao())
         val historyRepo = HistoryRepository(database.historyDao())
         aiRepository = AiRepository(context, database.aiCacheDao())
+        downloadRepository = com.aibrowser.app.data.DownloadRepository(database.downloadRecordDao())
 
         val factory = BrowserViewModel.Factory(bookmarkRepo, historyRepo)
         viewModel = ViewModelProvider(this, factory)[BrowserViewModel::class.java]
@@ -161,18 +163,31 @@ class BrowserFragment : Fragment() {
             webView.reload()
         }
 
-        webView.setDownloadListener { url, userAgent, contentDisposition, mimetype, _ ->
+        webView.setDownloadListener { url, userAgent, contentDisposition, mimetype, contentLength ->
             try {
+                val fileName = URLUtil.guessFileName(url, contentDisposition, mimetype)
                 val request = DownloadManager.Request(Uri.parse(url)).apply {
                     setMimeType(mimetype)
                     addRequestHeader("User-Agent", userAgent)
                     setDescription("Downloading file...")
                     setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                    setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimetype))
+                    setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
                 }
                 val dm = requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                 dm.enqueue(request)
                 Toast.makeText(context, "Download started...", Toast.LENGTH_SHORT).show()
+
+                // Save download records to Room as per specific behaviors specifications
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val record = com.aibrowser.app.domain.DownloadRecord(
+                        url = url,
+                        fileName = fileName,
+                        mimeType = mimetype,
+                        contentLength = contentLength
+                    )
+                    downloadRepository.insert(record)
+                    Timber.d("Successfully saved download record for %s to Room database", fileName)
+                }
             } catch (e: Exception) {
                 Timber.e(e, "Failed to start download")
                 Toast.makeText(context, "Download failed", Toast.LENGTH_SHORT).show()
@@ -230,8 +245,8 @@ class BrowserFragment : Fragment() {
             }
         } else {
             val prefs = requireContext().getSharedPreferences("browser_settings", Context.MODE_PRIVATE)
-            val useDuckDuckGo = prefs.getBoolean("use_duckduckgo", false)
-            val searchBase = if (useDuckDuckGo) "https://duckduckgo.com/?q=" else "https://www.google.com/search?q="
+            val useGoogle = prefs.getBoolean("use_google", false)
+            val searchBase = if (useGoogle) "https://www.google.com/search?q=" else "https://duckduckgo.com/?q="
             searchBase + java.net.URLEncoder.encode(trimmed, "UTF-8")
         }
 
