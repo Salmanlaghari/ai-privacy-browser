@@ -51,4 +51,10 @@ class BrowserActivity : AppCompatActivity() {
         super.onStop()
         TabManager.persist(this)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Between browser sessions: show Interstitial Ad on session termination
+        com.aibrowser.app.data.ads.AdMobManager.showInterstitialAd(this)
+    }
 }

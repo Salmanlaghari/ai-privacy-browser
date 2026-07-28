@@ -113,6 +113,9 @@ dependencies {
     // WorkManager background job
     implementation("androidx.work:work-runtime-ktx:2.9.0")
 
+    // Google Play Billing
+    implementation("com.android.billingclient:billing-ktx:7.0.0")
+
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

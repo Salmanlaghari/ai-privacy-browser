@@ -51,6 +51,20 @@ class HomeActivity : AppCompatActivity() {
         setupCuratedCategories()
         setupPersonalizedShortcuts()
         setupUtilityButtons()
+        setupHomeAds()
+    }
+
+    private fun setupHomeAds() {
+        // Pre-load Interstitial and Rewarded Ads on HomeActivity startup
+        com.aibrowser.app.data.ads.AdMobManager.loadInterstitialAd(this)
+        com.aibrowser.app.data.ads.AdMobManager.loadRewardedAd(this)
+
+        // Bottom of Home page (small, load banner ad after 5 seconds delay)
+        binding.root.postDelayed({
+            if (!isDestroyed && !isFinishing) {
+                com.aibrowser.app.data.ads.AdMobManager.loadBannerAd(this, binding.adBannerContainer)
+            }
+        }, 5000L)
     }
 
     private fun setupGreetings() {

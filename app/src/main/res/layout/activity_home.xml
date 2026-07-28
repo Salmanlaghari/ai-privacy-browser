@@ -289,4 +289,14 @@
             android:icon="@drawable/ic_settings" />
     </LinearLayout>
 
+    <!-- Bottom AdMob Banner Container -->
+    <LinearLayout
+        android:id="@+id/adBannerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#FAFAFA"
+        android:visibility="gone" />
+
 </LinearLayout>

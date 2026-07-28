@@ -95,7 +95,7 @@ class AiSearchBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun performSearch(query: String) {
-        binding.loadingProgress.visibility = View.VISIBLE
+        binding.loadingProgress.visibility = View.toBeDisplayedVisibility() ?: View.VISIBLE
         binding.aiResponseTextView.text = "Consulting Gemini..."
 
         lifecycleScope.launch {
@@ -105,11 +105,36 @@ class AiSearchBottomSheet : BottomSheetDialogFragment() {
                 }
                 binding.aiResponseTextView.text = MarkdownRenderer.renderMarkdown(response)
             } catch (e: Exception) {
-                binding.aiResponseTextView.text = e.message ?: "AI temporarily unavailable. Please try again."
+                val msg = e.message ?: "AI temporarily unavailable. Please try again."
+                binding.aiResponseTextView.text = msg
+
+                if (msg.contains("limit reached", ignoreCase = true)) {
+                    // Offer AdMob Rewarded trigger to grant more calls!
+                    showRewardedAdOfferDialog()
+                }
             } finally {
                 binding.loadingProgress.visibility = View.GONE
             }
         }
+    }
+
+    private fun showRewardedAdOfferDialog() {
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle("Daily Limit Reached")
+            .setMessage("Watch a short ad to earn +10 extra free AI calls instantly!")
+            .setPositiveButton("Watch Ad") { dialog, _ ->
+                com.aibrowser.app.data.ads.AdMobManager.showRewardedAd(requireActivity()) { amount ->
+                    aiRepository.addBonusUsageCalls(10)
+                    Toast.makeText(context, "Congratulations! You earned +10 more AI calls!", Toast.LENGTH_SHORT).show()
+                }
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun View.toBeDisplayedVisibility(): Int? {
+        return View.VISIBLE
     }
 
     override fun onDestroyView() {
