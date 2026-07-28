@@ -95,7 +95,7 @@ class AiSearchBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun performSearch(query: String) {
-        binding.loadingProgress.visibility = View.toBeDisplayedVisibility() ?: View.VISIBLE
+        binding.loadingProgress.visibility = View.VISIBLE
         binding.aiResponseTextView.text = "Consulting Gemini..."
 
         lifecycleScope.launch {
