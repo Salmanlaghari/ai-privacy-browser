@@ -31,37 +31,27 @@ jobs:
       - name: Configure Local Properties
         run: |
           echo "sdk.dir=$ANDROID_HOME" > local.properties
-          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY || 'AIzaSyPlaceholder' }}" >> local.properties
+          echo "GEMINI_API_KEY=AIzaSyPlaceholder" >> local.properties
 
       - name: Generate Release Keystore
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          KS_PASS="${KEYSTORE_PASSWORD:-moviehole123}"
-          K_PASS="${KEY_PASSWORD:-moviehole123}"
           keytool -genkey -v \
             -keystore release.keystore \
             -alias ai-browser \
             -keyalg RSA \
             -keysize 2048 \
             -validity 10000 \
-            -storepass "$KS_PASS" \
-            -keypass "$K_PASS" \
+            -storepass pass123456 \
+            -keypass pass123456 \
             -dname "CN=AIBrowser, OU=Dev, O=AIPrivacyBrowser, L=Karachi, S=Sindh, C=PK"
 
       - name: Build Release APK
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          KS_PASS="${KEYSTORE_PASSWORD:-moviehole123}"
-          K_PASS="${KEY_PASSWORD:-moviehole123}"
           ./gradlew assembleRelease \
             -Pandroid.injected.signing.store.file=release.keystore \
-            -Pandroid.injected.signing.store.password="$KS_PASS" \
+            -Pandroid.injected.signing.store.password=pass123456 \
             -Pandroid.injected.signing.key.alias=ai-browser \
-            -Pandroid.injected.signing.key.password="$K_PASS" \
+            -Pandroid.injected.signing.key.password=pass123456 \
             --no-daemon
 
       - name: Upload Release APK
