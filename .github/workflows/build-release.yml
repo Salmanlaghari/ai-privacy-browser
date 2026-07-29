@@ -35,7 +35,7 @@ jobs:
 
       - name: Generate Release Keystore
         run: |
-          rm -f release.keystore
+          rm -f release.keystore app/release.keystore
           keytool -genkey -v \
             -keystore release.keystore \
             -alias ai-browser \
@@ -45,6 +45,7 @@ jobs:
             -storepass pass123456 \
             -keypass pass123456 \
             -dname "CN=AIBrowser, OU=Dev, O=AIPrivacyBrowser, L=Karachi, S=Sindh, C=PK"
+          cp release.keystore app/release.keystore
 
       - name: Build Release APK
         run: |
