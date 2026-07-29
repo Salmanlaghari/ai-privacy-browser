@@ -39,8 +39,8 @@ class GeminiClient {
     @Throws(Exception::class)
     suspend fun generateContent(prompt: String): String {
         val apiKey = BuildConfig.GEMINI_API_KEY
-        if (apiKey.isEmpty() || apiKey.startsWith("AIzaSyPlaceholder")) {
-            throw IllegalArgumentException("Invalid API key configuration. Please set GEMINI_API_KEY in local.properties.")
+        if (apiKey.isEmpty() || apiKey == "placeholder" || apiKey.startsWith("AIzaSyPlaceholder")) {
+            throw IllegalArgumentException("AI features require a valid API key. Please configure GEMINI_API_KEY in local.properties or set it as a GitHub Secret.")
         }
 
         val request = GeminiRequest(
