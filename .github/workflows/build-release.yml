@@ -31,7 +31,7 @@ jobs:
       - name: Configure Local Properties
         run: |
           echo "sdk.dir=$ANDROID_HOME" > local.properties
-          echo "GEMINI_API_KEY=AIzaSyPlaceholder" >> local.properties
+          echo "GEMINI_API_KEY=*** secrets.GEMINI_API_KEY || 'placeholder' }}" >> local.properties
 
       - name: Generate Release Keystore
         run: |

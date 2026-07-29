@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="?android:attr/colorBackground">
+    android:background="@drawable/bg_premium_gradient">
 
     <!-- News Ticker Row -->
     <com.aibrowser.app.ui.home.NewsTickerView
         android:id="@+id/newsTicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimaryContainer"
-        android:textColor="?attr/colorOnPrimaryContainer"
-        android:padding="8dp"
+        android:background="@drawable/bg_glass_ticker"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
         android:textSize="12sp"
         android:textStyle="bold"
         android:gravity="center"
@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:clipToPadding="false"
         android:padding="16dp">
 
         <LinearLayout
@@ -34,141 +35,226 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Greeting + Time -->
-            <TextView
-                android:id="@+id/greetingText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Good morning, User"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp" />
-
-            <!-- Large Search Bar Container -->
-            <LinearLayout
+            <!-- Premium Greeting Card with 3D effect -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:background="@drawable/bg_search_bar"
-                android:padding="4dp"
-                android:layout_marginBottom="24dp">
-
-                <EditText
-                    android:id="@+id/urlEditText"
-                    android:layout_width="0dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="12dp"
+                app:cardBackgroundColor="#1A1A2E">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/search_or_url_hint"
-                    android:inputType="textUri|textAutoCorrect"
-                    android:maxLines="1"
-                    android:imeOptions="actionGo"
-                    android:background="@android:color/transparent"
-                    android:padding="12dp"
-                    android:textSize="14sp" />
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:background="@drawable/bg_3d_card">
+                    <TextView
+                        android:id="@+id/greetingText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Good evening, User"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:fontFamily="sans-serif-medium" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔒 Protected by AI Privacy Shield"
+                        android:textSize="12sp"
+                        android:textColor="#B0B0FF"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                <ImageButton
-                    android:id="@+id/btnHomeAiSearch"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/ic_mic"
-                    android:contentDescription="Ask AI Search"
-                    android:background="?attr/selectableItemBackgroundBorderless" />
-
-                <Button
-                    android:id="@+id/btnGo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btn_go"
-                    android:layout_marginEnd="4dp" />
-            </LinearLayout>
-
-            <!-- Quick AI Assistant Shortcuts -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="AI Assistants"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground"
-                android:layout_marginBottom="8dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="24dp">
-
-                <Button
-                    android:id="@+id/btnHomeAskAi"
-                    style="@style/Widget.Material3.Button.ElevatedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="🤖 Ask AI"
-                    android:layout_marginEnd="8dp" />
-
-                <Button
-                    android:id="@+id/btnHomeSummarize"
-                    style="@style/Widget.Material3.Button.ElevatedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="✨ Summarize"
-                    android:layout_marginEnd="8dp" />
-
-                <Button
-                    android:id="@+id/btnHomeTranslate"
-                    style="@style/Widget.Material3.Button.ElevatedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="🌍 Translate" />
-            </LinearLayout>
-
-            <!-- Privacy Blocker Badge -->
-            <com.google.android.material.card.MaterialCardView
+            <!-- Premium Search Bar with Glass Effect -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardCornerRadius="12dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="?attr/colorOutlineVariant"
-                app:cardBackgroundColor="?attr/colorTertiaryContainer">
+                app:cardCornerRadius="25dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="#2A2A4A">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:padding="6dp">
+                    <EditText
+                        android:id="@+id/urlEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="🔍 Search or enter URL"
+                        android:inputType="textUri|textAutoCorrect"
+                        android:maxLines="1"
+                        android:imeOptions="actionGo"
+                        android:background="@android:color/transparent"
+                        android:padding="14dp"
+                        android:textSize="15sp"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#8080AA" />
+                    <ImageButton
+                        android:id="@+id/btnHomeAiSearch"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_mic"
+                        android:contentDescription="Ask AI Search"
+                        android:background="@drawable/bg_mic_button"
+                        android:padding="10dp" />
+                    <Button
+                        android:id="@+id/btnGo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Go"
+                        android:background="@drawable/bg_go_button"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="4dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Premium AI Assistants Section with 3D Cards -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🤖 AI Assistants"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="24dp">
+
+                <!-- Ask AI 3D Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="10dp">
+                    <Button
+                        android:id="@+id/btnHomeAskAi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🤖 Ask AI"
+                        android:background="@drawable/bg_3d_button_purple"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:padding="16dp"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- Summarize 3D Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="10dp">
+                    <Button
+                        android:id="@+id/btnHomeSummarize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✨ Summarize"
+                        android:background="@drawable/bg_3d_button_blue"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:padding="16dp"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- Translate 3D Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="10dp">
+                    <Button
+                        android:id="@+id/btnHomeTranslate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🌍 Translate"
+                        android:background="@drawable/bg_3d_button_green"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:padding="16dp"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- Premium Privacy Shield Card with 3D Effect -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="12dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="18dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_privacy_card">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="🛡️"
-                        android:textSize="24sp"
-                        android:layout_marginEnd="12dp" />
+                        android:textSize="28sp"
+                        android:layout_marginEnd="14dp" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/privacyBadgeText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Privacy Shield Active"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="48 trackers blocked today"
+                            android:textColor="#B0FFB0"
+                            android:textSize="12sp" />
+                    </LinearLayout>
                     <TextView
-                        android:id="@+id/privacyBadgeText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Privacy: 48 trackers blocked today"
+                        android:text="PRO"
+                        android:textColor="#FFD700"
                         android:textStyle="bold"
-                        android:textColor="?attr/colorOnTertiaryContainer"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:background="@drawable/bg_pro_badge"
+                        android:padding="6dp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp" />
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.cardview.widget.CardView>
 
             <!-- Category Filter horizontal scroll chips -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Explore Curated Categories"
-                android:textSize="14sp"
+                android:text="🌐 Explore Categories"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground"
-                android:layout_marginBottom="8dp" />
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -180,49 +266,55 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:singleSelection="true">
-
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipNews"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="News"
-                        android:checked="true" />
-
+                        android:text="📰 News"
+                        android:checked="true"
+                        android:chipBackgroundColor="@color/chip_selected_bg"
+                        android:textColor="@color/chip_text_color" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipSports"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sports" />
-
+                        android:text="🏏 Sports"
+                        android:chipBackgroundColor="@color/chip_selected_bg"
+                        android:textColor="@color/chip_text_color" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipTech"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tech" />
-
+                        android:text="💻 Tech"
+                        android:chipBackgroundColor="@color/chip_selected_bg"
+                        android:textColor="@color/chip_text_color" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipReligious"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Religious" />
-
+                        android:text="🕌 Religious"
+                        android:chipBackgroundColor="@color/chip_selected_bg"
+                        android:textColor="@color/chip_text_color" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipShopping"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Shopping" />
-
+                        android:text="🛒 Shopping"
+                        android:chipBackgroundColor="@color/chip_selected_bg"
+                        android:textColor="@color/chip_text_color" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipEntertainment"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Entertainment" />
+                        android:text="🎬 Entertainment"
+                        android:chipBackgroundColor="@color/chip_selected_bg"
+                        android:textColor="@color/chip_text_color" />
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
 
@@ -239,11 +331,11 @@
                 android:id="@+id/personalizedTitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Frequently Visited"
-                android:textSize="14sp"
+                android:text="⚡ Frequently Visited"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground"
-                android:layout_marginBottom="8dp" />
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/personalizedRecyclerView"
@@ -255,38 +347,42 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Utility Shortcuts row -->
+    <!-- Premium Bottom Navigation Bar -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="?attr/colorSurface"
-        android:elevation="8dp">
-
+        android:background="@drawable/bg_premium_bottom_nav"
+        android:elevation="12dp"
+        android:padding="4dp">
         <Button
             android:id="@+id/btnHomeBookmarks"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/title_bookmarks"
-            android:icon="@drawable/ic_bookmark" />
-
+            android:layout_weight="1"
+            android:text="⭐ Bookmarks"
+            android:background="@drawable/bg_nav_button"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp" />
         <Button
             android:id="@+id/btnHomeHistory"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/title_history"
-            android:icon="@drawable/ic_history" />
-
+            android:layout_weight="1"
+            android:text="📜 History"
+            android:background="@drawable/bg_nav_button"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp" />
         <Button
             android:id="@+id/btnHomeSettings"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/title_settings"
-            android:icon="@drawable/ic_settings" />
+            android:layout_weight="1"
+            android:text="⚙️ Settings"
+            android:background="@drawable/bg_nav_button"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp" />
     </LinearLayout>
 
     <!-- Bottom AdMob Banner Container -->
@@ -296,7 +392,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="#FAFAFA"
+        android:background="#1A1A2E"
         android:visibility="gone" />
 
 </LinearLayout>
