@@ -35,6 +35,7 @@ jobs:
 
       - name: Generate Release Keystore
         run: |
+          rm -f release.keystore
           keytool -genkey -v \
             -keystore release.keystore \
             -alias ai-browser \
