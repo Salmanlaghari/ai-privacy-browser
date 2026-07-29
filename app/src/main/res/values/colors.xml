@@ -48,4 +48,8 @@
     <!-- AMOLED Black -->
     <color name="accent_amoled">#000000</color>
     <color name="accent_amoled_dark">#000000</color>
+
+    <!-- Chip Colors -->
+    <color name="chip_selected_bg">#1976D2</color>
+    <color name="chip_unselected_bg">#E0E0E0</color>
 </resources>

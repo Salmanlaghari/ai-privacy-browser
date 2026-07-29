@@ -273,7 +273,7 @@
                         android:layout_height="wrap_content"
                         android:text="📰 News"
                         android:checked="true"
-                        android:chipBackgroundColor="@color/chip_selected_bg"
+                        app:chipBackgroundColor="@color/chip_selected_bg"
                         android:textColor="@color/chip_text_color" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipSports"
@@ -281,7 +281,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="🏏 Sports"
-                        android:chipBackgroundColor="@color/chip_selected_bg"
+                        app:chipBackgroundColor="@color/chip_selected_bg"
                         android:textColor="@color/chip_text_color" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipTech"
@@ -289,7 +289,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="💻 Tech"
-                        android:chipBackgroundColor="@color/chip_selected_bg"
+                        app:chipBackgroundColor="@color/chip_selected_bg"
                         android:textColor="@color/chip_text_color" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipReligious"
@@ -297,7 +297,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="🕌 Religious"
-                        android:chipBackgroundColor="@color/chip_selected_bg"
+                        app:chipBackgroundColor="@color/chip_selected_bg"
                         android:textColor="@color/chip_text_color" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipShopping"
@@ -305,7 +305,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="🛒 Shopping"
-                        android:chipBackgroundColor="@color/chip_selected_bg"
+                        app:chipBackgroundColor="@color/chip_selected_bg"
                         android:textColor="@color/chip_text_color" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipEntertainment"
@@ -313,7 +313,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="🎬 Entertainment"
-                        android:chipBackgroundColor="@color/chip_selected_bg"
+                        app:chipBackgroundColor="@color/chip_selected_bg"
                         android:textColor="@color/chip_text_color" />
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
