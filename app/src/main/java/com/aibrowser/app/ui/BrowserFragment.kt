@@ -31,6 +31,13 @@ import com.aibrowser.app.ui.ai.AiSearchBottomSheet
 import com.aibrowser.app.ui.ai.AiSummaryBottomSheet
 import com.aibrowser.app.ui.ai.AiTranslateBottomSheet
 import com.aibrowser.app.util.TextExtractor
+import com.aibrowser.app.util.ReaderMode
+import com.aibrowser.app.util.ScreenshotTool
+import com.aibrowser.app.util.UserAgentSwitcher
+import com.aibrowser.app.util.DataSaver
+import com.aibrowser.app.util.FindOnPage
+import com.aibrowser.app.data.IncognitoManager
+import com.aibrowser.app.data.SpeedDialManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -325,6 +332,30 @@ class BrowserFragment : Fragment() {
                     openAiTranslate()
                     true
                 }
+                R.id.action_incognito -> {
+                    toggleIncognito()
+                    true
+                }
+                R.id.action_reader_mode -> {
+                    toggleReaderMode()
+                    true
+                }
+                R.id.action_desktop_mode -> {
+                    toggleDesktopMode()
+                    true
+                }
+                R.id.action_find_on_page -> {
+                    showFindOnPageDialog()
+                    true
+                }
+                R.id.action_screenshot -> {
+                    takeScreenshot()
+                    true
+                }
+                R.id.action_data_saver -> {
+                    toggleDataSaver()
+                    true
+                }
                 R.id.action_add_bookmark -> {
                     val url = binding.webView.url ?: ""
                     val title = binding.webView.title ?: "No Title"
@@ -368,6 +399,69 @@ class BrowserFragment : Fragment() {
             val bottomSheet = AiTranslateBottomSheet.newInstance(text)
             bottomSheet.show(parentFragmentManager, "AiTranslate")
         }
+    }
+
+    // ===== NEW PREMIUM FEATURES =====
+
+    private fun toggleIncognito() {
+        IncognitoManager.toggle()
+        val status = if (IncognitoManager.isActive()) "🥷 Incognito ON — No history saved" else "Incognito OFF"
+        Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun toggleReaderMode() {
+        ReaderMode.toggle(binding.webView)
+        val status = if (ReaderMode.isActive()) "📖 Reader Mode ON — Clean reading" else "Reader Mode OFF"
+        Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun toggleDesktopMode() {
+        UserAgentSwitcher.toggleDesktop(binding.webView)
+        val mode = UserAgentSwitcher.getCurrentLabel()
+        Toast.makeText(context, "🖥️ Switched to $mode mode", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showFindOnPageDialog() {
+        val inputEditText = EditText(requireContext()).apply {
+            hint = "Search on this page..."
+            setPadding(32, 32, 32, 32)
+        }
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("🔍 Find on Page")
+            .setView(inputEditText)
+            .setPositiveButton("Search") { _, _ ->
+                val query = inputEditText.text.toString().trim()
+                if (query.isNotEmpty()) {
+                    FindOnPage.find(binding.webView, query) { count ->
+                        activity?.runOnUiThread {
+                            Toast.makeText(context, "Found $count matches", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+            .setNeutralButton("Next Match") { _, _ ->
+                FindOnPage.next(binding.webView)
+            }
+            .setNegativeButton("Clear") { _, _ ->
+                FindOnPage.clear(binding.webView)
+            }
+            .show()
+    }
+
+    private fun takeScreenshot() {
+        val path = ScreenshotTool.captureVisible(binding.webView, requireContext())
+        if (path != null) {
+            Toast.makeText(context, "📸 Screenshot saved!", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Screenshot failed", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun toggleDataSaver() {
+        DataSaver.toggle(binding.webView)
+        val status = DataSaver.getStatusText()
+        Toast.makeText(context, "📊 $status", Toast.LENGTH_SHORT).show()
     }
 
     private fun injectSmartComposeListener() {

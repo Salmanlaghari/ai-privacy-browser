@@ -14,6 +14,30 @@
         android:title="🌍 AI Page Translate" />
 
     <item
+        android:id="@+id/action_incognito"
+        android:title="🥷 Incognito Mode" />
+
+    <item
+        android:id="@+id/action_reader_mode"
+        android:title="📖 Reader Mode" />
+
+    <item
+        android:id="@+id/action_desktop_mode"
+        android:title="🖥️ Desktop Mode" />
+
+    <item
+        android:id="@+id/action_find_on_page"
+        android:title="🔍 Find on Page" />
+
+    <item
+        android:id="@+id/action_screenshot"
+        android:title="📸 Screenshot" />
+
+    <item
+        android:id="@+id/action_data_saver"
+        android:title="📊 Data Saver" />
+
+    <item
         android:id="@+id/action_add_bookmark"
         android:title="Add Bookmark" />
 
