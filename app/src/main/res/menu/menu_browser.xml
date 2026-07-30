@@ -15,27 +15,27 @@
 
     <item
         android:id="@+id/action_incognito"
-        android:title="🥷 Incognito Mode" />
+        android:title="Incognito Mode" />
 
     <item
         android:id="@+id/action_reader_mode"
-        android:title="📖 Reader Mode" />
+        android:title="Reader Mode" />
 
     <item
         android:id="@+id/action_desktop_mode"
-        android:title="🖥️ Desktop Mode" />
+        android:title="Desktop Mode" />
 
     <item
         android:id="@+id/action_find_on_page"
-        android:title="🔍 Find on Page" />
+        android:title="Find on Page" />
 
     <item
         android:id="@+id/action_screenshot"
-        android:title="📸 Screenshot" />
+        android:title="Screenshot" />
 
     <item
         android:id="@+id/action_data_saver"
-        android:title="📊 Data Saver" />
+        android:title="Data Saver" />
 
     <item
         android:id="@+id/action_add_bookmark"

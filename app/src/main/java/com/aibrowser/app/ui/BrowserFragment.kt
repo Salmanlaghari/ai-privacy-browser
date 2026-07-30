@@ -37,7 +37,6 @@ import com.aibrowser.app.util.UserAgentSwitcher
 import com.aibrowser.app.util.DataSaver
 import com.aibrowser.app.util.FindOnPage
 import com.aibrowser.app.data.IncognitoManager
-import com.aibrowser.app.data.SpeedDialManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
