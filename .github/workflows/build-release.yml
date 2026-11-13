@@ -26,13 +26,11 @@ jobs:
           cache: 'gradle'
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+  uses: android-actions/setup-android@v3
 
-      - name: Configure Local Properties
-        run: |
-          echo "sdk.dir=$ANDROID_HOME" > local.properties
-          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY || 'placeholder' }}" >> local.properties
-
+- name: Install Android SDK components
+  run: |
+    sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;35.0.0" "cmdline-tools;latest"
       - name: Generate Release Keystore
         run: |
           rm -f release.keystore app/release.keystore
